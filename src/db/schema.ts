@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 // import { PrimaryKey, primaryKey } from "drizzle-orm/mysql-core";
-import { pgTable, text, timestamp, uniqueIndex, uuid, integer, pgEnum,  primaryKey } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uniqueIndex, uuid, integer, pgEnum,  primaryKey, foreignKey } from "drizzle-orm/pg-core";
 import { createSelectSchema, createInsertSchema, createUpdateSchema } from "drizzle-zod"
 
 export const reactionType = pgEnum("reaction_type", ["like", "dislike"])
@@ -21,9 +21,10 @@ export const userRelations = relations(users, ({ many }) => ({
     videos: many(videos),
     videoViews: many(videoViews),
     videoReactions: many(videoReactions),
-    subscriptionsSent: many(subscriptions, { relationName: "viewer" }),
-    subscriptionsReceived: many(subscriptions, { relationName: "creator" }),
+    subscriptions: many(subscriptions, { relationName: "viewer" }),
+    subscribers: many(subscriptions, { relationName: "creator" }),
     comments: many(comments),
+    commentReactions:many(commentReactions)
   }));
   
 
@@ -118,19 +119,25 @@ export const videoRelations = relations(videos, ({ one, many }) => ({
     }),
     views: many(videoViews),
     reactions: many(videoReactions),
-    comments:many(comments),
-    commentReactions:many(commentReactions)
-
-
+    comments: many(comments)
 }))
 
 export const comments =pgTable("comments",{
     id:uuid("id").primaryKey().defaultRandom(),
+    parentId:uuid("parent_id"),
     userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }).notNull(),
     videoId: uuid("video_id").references(() => videos.id, { onDelete: "cascade" }).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
     value:text("value").notNull()
+},(t)=>{
+    return [
+        foreignKey({
+            columns:[t.parentId],
+            foreignColumns:[t.id],
+            name:"comments_parent_id_fkey"
+        }).onDelete("cascade")
+    ]
 })
 
 export const commentRelations = relations(comments,({one,many})=>({
@@ -143,7 +150,16 @@ export const commentRelations = relations(comments,({one,many})=>({
         fields:[comments.videoId],
         references:[videos.id]
     }),
-    reactions:many(commentReactions)
+    parent:one(comments,{
+        fields:[comments.parentId],
+        references:[comments.id],
+        relationName:"comments_parent_id_fkey"
+    }),
+    reactions:many(commentReactions),
+    replies:many(comments,{
+        relationName:"comments_parent_id_fkey"
+    })
+
 
 
 }))
