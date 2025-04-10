@@ -15,7 +15,7 @@ import { UserInfo } from "@/modules/users/ui/components/user-info";
 import { UserAvatar } from "@/components/user-avatar";
 
 import { VideoMenu } from "./video-menu";
-import { VideoThumbnail } from "./video-thumbnail";
+import { VideoThumbnail, VideoThumbnailSkeleton } from "./video-thumbnail";
 import { VideoGetManyOutput } from "../../types";
 
 const videoRowCardVariants = cva("group flex min-w-0", {
@@ -47,26 +47,52 @@ interface VideoRowCardProps extends VariantProps<typeof videoRowCardVariants> {
   onRemove?: () => void;
 }
 
-export const VideoRowCardSkeleton = () => {
-  return <div><Skeleton/></div>;
+export const VideoRowCardSkeleton = ({ size }: VariantProps<typeof videoRowCardVariants>) => {
+  return (
+    <div className={videoRowCardVariants({ size })}>
+      <div className={thumbnailVariants({ size })}>
+        <VideoThumbnailSkeleton />
+      </div>
+      {/* Info skeleton */}
+
+      <div className="flex-1 min-w-0">
+        <div className="flex justify-between gap-x-2">
+          <div className="flex min-w-0">
+            <Skeleton
+              className={cn("h-5 w-[40%]", size === "compact" && "w-[40%]")}
+            />
+            {size === "default" && (
+              <>
+                <Skeleton className="h-4 w-[20%] mt-1" />
+                <div className="flex items-center gap-2 my-3">
+                  <Skeleton className="size-8 rounded-full" />
+                  <Skeleton className="h-4 w-24" />
+                </div>
+              </>
+            )}
+            {size === "compact" && (
+              <>
+                <Skeleton className="h-4 w-[50%] mt-1" />
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export const VideoRowCard = ({ data, size, onRemove }: VideoRowCardProps) => {
-
-    const compactViews = useMemo(()=>{
-
-        return Intl.NumberFormat("en",{
-            notation:"compact"
-        }).format(data.viewCount)
-
-    },[data.viewCount])
-    const compactLikes = useMemo(()=>{
-
-        return Intl.NumberFormat("en",{
-            notation:"compact"
-        }).format(data.likeCount)
-
-    },[data.likeCount])
+export const VideoRowCard = ({ data, size="default", onRemove }: VideoRowCardProps) => {
+  const compactViews = useMemo(() => {
+    return Intl.NumberFormat("en", {
+      notation: "compact",
+    }).format(data.viewCount);
+  }, [data.viewCount]);
+  const compactLikes = useMemo(() => {
+    return Intl.NumberFormat("en", {
+      notation: "compact",
+    }).format(data.likeCount);
+  }, [data.likeCount]);
   return (
     <div className={videoRowCardVariants({ size })}>
       <Link href={`/videos/${data.id}`} className={thumbnailVariants({ size })}>
@@ -120,26 +146,17 @@ export const VideoRowCard = ({ data, size, onRemove }: VideoRowCardProps) => {
                 </Tooltip>
               </>
             )}
-            {
-                size==="compact" &&(
-                    <UserInfo size="sm" name={data.user.name}/>
-                )
-            }
-            {
-                size==="compact" && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                        {compactViews} views • {compactLikes} likes
-                    </p>
-                )
-            }
+            {size === "compact" && <UserInfo size="sm" name={data.user.name} />}
+            {size === "compact" && (
+              <p className="text-xs text-muted-foreground mt-1">
+                {compactViews} views • {compactLikes} likes
+              </p>
+            )}
           </Link>
-          <div
-          className="flex-none">
-            <VideoMenu videoId={data.id} onRemove={onRemove}/>
+          <div className="flex-none">
+            <VideoMenu videoId={data.id} onRemove={onRemove} />
           </div>
-          
         </div>
-        
       </div>
     </div>
   );

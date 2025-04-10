@@ -21,6 +21,7 @@ import {
   LockIcon,
   MoreVerticalIcon,
   RotateCcw,
+  RotateCcwIcon,
   SparkleIcon,
   SparklesIcon,
   Trash2Icon,
@@ -57,6 +58,7 @@ import Image from "next/image";
 import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
 import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
 import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal";
+import { APP_URL } from "@/constants";
 interface FormSectionProps {
   videoId: string;
 }
@@ -150,6 +152,18 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
       toast.error("Something went wrong");
     },
   });
+
+  const revalidate =trpc.videos.revalidate.useMutation({
+    onSuccess:()=>{
+      utils.studio.getMany.invalidate();
+      utils.studio.getOne.invalidate({id:videoId})
+      toast.success("Video revalidated")
+    },
+    onError:()=>{
+      toast.error("Something went wrong")
+    }
+  })
+  
   const remove = trpc.videos.remove.useMutation({
     onSuccess: () => {
       utils.studio.getMany.invalidate();
@@ -206,7 +220,7 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
   };
 
   const fullUrl = `${
-    process.env.VERCEL_URL || "http://localhost:3000"
+    APP_URL || "http://localhost:3000"
   }/videos/${videoId}`;
 
   const [isCopied, setIsCopied] = useState(false);
@@ -249,12 +263,19 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                     <MoreVerticalIcon />
                   </Button>
                 </DropdownMenuTrigger>
+                
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem
                     onClick={() => remove.mutate({ id: videoId })}
                   >
                     <Trash2Icon className="size-4 mr-2" />
                     Delete
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => revalidate.mutate({ id: videoId })}
+                  >
+                    <RotateCcwIcon className="size-4 mr-2" />
+                    Revalidate
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
