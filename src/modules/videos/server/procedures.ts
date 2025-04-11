@@ -161,6 +161,8 @@ export const videosRouter = createTRPCRouter({
                     throw new TRPCError({code:"BAD_REQUEST"})
                   }
                   const playbackId = asset.playback_ids?.[0].id
+
+                 
                   const [updatedVideo] = await db
                   .update(videos)
                   .set({

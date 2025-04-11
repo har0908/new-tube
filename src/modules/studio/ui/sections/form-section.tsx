@@ -220,7 +220,7 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
   };
 
   const fullUrl = `${
-    APP_URL || "http://localhost:3000"
+    APP_URL 
   }/videos/${videoId}`;
 
   const [isCopied, setIsCopied] = useState(false);

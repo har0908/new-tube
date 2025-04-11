@@ -27,9 +27,8 @@ function getUrl() {
   const base = (() => {
     if (typeof window !== 'undefined') return '';
 
-    console.log(APP_URL)
-    if (APP_URL) return `https://${APP_URL}`;
-    return 'http://localhost:3000';
+    //crucial to modify in .env to production domain (including protocol)
+    return APP_URL;
   })();
   return `${base}/api/trpc`;
 }
