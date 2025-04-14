@@ -6,7 +6,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { APP_URL } from "@/constants";
+import { PlaylistAddModal } from "@/modules/playlists/ui/components/playlist-add-modal";
 import { ListPlusIcon, MoreVerticalIcon, ShareIcon, Trash2Icon } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 interface VideoMenuProps {
   videoId: string;
@@ -14,6 +16,8 @@ interface VideoMenuProps {
   onRemove?: () => void;
 }
 export const VideoMenu = ({ videoId, variant="ghost", onRemove }: VideoMenuProps) => {
+
+    const [isOpenPlaylstAddModal,setIsOpenPlaylstAddModal] = useState(false)
 
     const onShare = () =>{
         const fullUrl = `${
@@ -23,6 +27,14 @@ export const VideoMenu = ({ videoId, variant="ghost", onRemove }: VideoMenuProps
           toast.success("link to clipboard")
     }
   return (
+    <>
+
+    <PlaylistAddModal
+    videoId={videoId}
+    open={isOpenPlaylstAddModal}
+    onOpenChange={setIsOpenPlaylstAddModal}
+      />
+
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant={variant} size="icon" className="rounded-full">
@@ -34,7 +46,7 @@ export const VideoMenu = ({ videoId, variant="ghost", onRemove }: VideoMenuProps
             <ShareIcon className="mr-2 size-4"/>
             Share
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={()=>{}}>
+        <DropdownMenuItem onClick={()=>setIsOpenPlaylstAddModal(true)}>
             <ListPlusIcon className="mr-2 size-4"/>
             Add to playlist
         </DropdownMenuItem>
@@ -47,5 +59,6 @@ export const VideoMenu = ({ videoId, variant="ghost", onRemove }: VideoMenuProps
         
       </DropdownMenuContent>
     </DropdownMenu>
+    </>
   );
 };

@@ -402,8 +402,8 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                               AI-generated
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                              onClick={() =>
-                                restoreThumbnail.mutate({ id: videoId })
+                              onClick={() =>{if(confirm("Are you sure you want to restore the thumbnail?"))
+                                restoreThumbnail.mutate({ id: videoId })}
                               }
                             >
                               <RotateCcw className="size-4 mr-1" />
