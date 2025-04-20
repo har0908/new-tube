@@ -19,7 +19,7 @@ isManual
 }:SuggestionsSectionProps) =>{
 
     return(
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<SuggestionsSectionSkeleton />}>
             <ErrorBoundary fallback={<p>Error</p>}>
             <SuggestionsSectionSuspense videoId={videoId} isManual={isManual} />
             </ErrorBoundary>
@@ -48,7 +48,7 @@ const SuggestionsSectionSkeleton = () =>{
 
 export const SuggestionsSectionSuspense = ({
     videoId,
-    isManual,
+  
 }:SuggestionsSectionProps) =>{
 
 

@@ -1,8 +1,9 @@
 "use client";
 
-import { Clapperboard, ClapperboardIcon, UserCircleIcon, UserIcon } from "lucide-react";
+import {  ClapperboardIcon, UserCircleIcon, UserIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+
 
 import { SignedIn, SignInButton, SignedOut, UserButton } from "@clerk/nextjs";
 

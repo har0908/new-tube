@@ -10,11 +10,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { from } from "svix/dist/openapi/rxjsStub";
+
 import {
   CopyCheckIcon,
   CopyIcon,
-  Files,
+
   Globe2Icon,
   ImagePlusIcon,
   Loader2Icon,
@@ -25,7 +25,7 @@ import {
   SparkleIcon,
   SparklesIcon,
   Trash2Icon,
-  TrashIcon,
+
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -460,7 +460,7 @@ export const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                         Video Link
                       </p>
                       <div className="flex items-center gap-x-2">
-                        <Link href={`/videos/${video.id}`}>
+                        <Link prefetch  href={`/videos/${video.id}`}>
                           <p className="line-clamp-1 text-sm text-blue-500">
                             {fullUrl}
                           </p>

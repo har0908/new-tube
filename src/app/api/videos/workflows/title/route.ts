@@ -2,12 +2,11 @@ import { serve } from "@upstash/workflow/nextjs"
 import {db} from "@/db";
 import { videos } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
-import { title } from "process";
+
 
 interface InputType {
-
-  userId:string,
-  videoId:string
+  userId:string;
+  videoId:string;
 }
 
 const TITLE_SYSTEM_PROMPT = `Your task is to generate an SEO-focused title for a YouTube video based on its transcript. Please follow these guidelines:

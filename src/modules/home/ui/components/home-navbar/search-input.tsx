@@ -2,18 +2,30 @@
 
 
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { APP_URL } from "@/constants";
 import { SearchIcon, XIcon } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react"
+import { Suspense, useState } from "react"
+
 
 export const SearchInput = ()=>{
+  return (
+    <Suspense fallback={<Skeleton className="h-10 w-full"/>}>
+
+      <SearchInputSuspense/>
+
+    </Suspense>
+  )
+
+}
+export const SearchInputSuspense = ()=>{
     // TODO: add search functionality
 
     const router = useRouter()
     const searchParams = useSearchParams();
     const categoryId = searchParams.get("categoryId")||"";
-    const query = searchParams.get("query")||"";
+    
 
     const [value,SetValue] = useState("");
 

@@ -38,7 +38,7 @@ export const ThumbnailGenerateModal = ({
     },
   });
 
-  const utils = trpc.useUtils();
+
   const generateThumbnail = trpc.videos.generateThumbnail.useMutation({
     onSuccess: () => {
       toast.success("Background job started", {

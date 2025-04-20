@@ -11,12 +11,12 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { UserAvatar } from "@/components/user-avatar";
 import { DEFAULT_LIMIT } from "@/constants";
-import { subscriptions } from "@/db/schema";
+
 import { trpc } from "@/trpc/client";
-import { useAuth, useClerk } from "@clerk/nextjs";
-import { HistoryIcon, ListIcon, ListVideoIcon, ThumbsUp } from "lucide-react";
+import {  ListIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 
 export const LoadingSkeleton = () => {
   return (
@@ -62,7 +62,7 @@ export const SubscriptionSection = () => {
                     asChild
                     isActive={pathname === `/users/${subscriptions.user.id}`}
                   >
-                    <Link
+                    <Link prefetch 
                       href={`/users/${subscriptions.user.id}`}
                       className="flex items-center gap-4"
                     >
@@ -83,7 +83,7 @@ export const SubscriptionSection = () => {
                         asChild
                         isActive={pathname==="/subscriptions"}
                         >
-                            <Link href="/subscriptions" className="flex items-center gap-4">
+                            <Link prefetch  href="/subscriptions" className="flex items-center gap-4">
                             <ListIcon className="size-4"/>
                             <span className="text-sm">All Subscription</span>
                             </Link>

@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { users, videoReactions, videos, videoViews } from "@/db/schema";
-import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { baseProcedure, createTRPCRouter} from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { eq,and,or, lt, desc, getTableColumns, not } from "drizzle-orm";
 
@@ -19,7 +19,7 @@ export const suggestionsRouter = createTRPCRouter({
             limit:z.number().min(1).max(100)
         })
     )
-    .query(async({ctx,input})=>{
+    .query(async({input})=>{
         const {videoId,cursor,limit} = input;
         
 

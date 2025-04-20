@@ -10,7 +10,7 @@ import { headers } from "next/headers";
 import { mux } from "@/lib/mux"
 import { db } from "@/db";
 import { videos } from "@/db/schema";
-import { Upload } from "lucide-react";
+
 import { UTApi } from "uploadthing/server";
 
 type WebhookEvent =

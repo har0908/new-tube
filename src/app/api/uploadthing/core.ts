@@ -16,7 +16,7 @@ export const ourFileRouter = {
       maxFileCount: 1,
     },
   })
-    .middleware(async ({ input }) => {
+    .middleware(async () => {
 
       const { userId: clerkUserId } = await auth();
 

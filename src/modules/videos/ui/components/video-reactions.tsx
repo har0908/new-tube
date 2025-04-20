@@ -3,10 +3,8 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { ThumbsDownIcon, ThumbsUpIcon } from "lucide-react";
 import { VideoGetOneOutput } from "../../types";
-import { use } from "react";
 import { useClerk } from "@clerk/nextjs";
 import { trpc } from "@/trpc/client";
-import { error } from "console";
 import { toast } from "sonner";
 
 interface VideoReactionsProps{

@@ -7,7 +7,7 @@ import { Loader2Icon, SquareCheckIcon, SquareIcon } from "lucide-react";
 import { toast } from "sonner";
 
 
-import { z } from "zod";
+
 
 
 
@@ -18,9 +18,7 @@ interface PlaylistCreateModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const formSchema = z.object({
-  name: z.string().min(1),
-});
+
 
 export const PlaylistAddModal = ({
   videoId,
@@ -44,11 +42,7 @@ export const PlaylistAddModal = ({
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     enabled: !!videoId && open
   })
- const handleOpenChange = (newOpen:boolean)=>{
-  utils.playlists.getManyForVideo.reset()
-  onOpenChange(newOpen);
-
- }
+ 
 
  const addVideo = trpc.playlists.addVideo.useMutation({
   onSuccess:(data)=>{

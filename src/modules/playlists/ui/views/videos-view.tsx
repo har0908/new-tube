@@ -1,5 +1,4 @@
 
-import { HistoryVideosSection } from "../sections/history-videos-section";
 import { PlaylistHeaderSection } from "../sections/playlist-header-section";
 import { VideosSection } from "../sections/video-section";
 

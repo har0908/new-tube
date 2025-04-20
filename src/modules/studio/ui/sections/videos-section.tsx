@@ -11,17 +11,17 @@ import {
   Table,
   TableHeader,
   TableBody,
-  TableFooter,
+
   TableHead,
   TableRow,
   TableCell,
-  TableCaption,
+  
 } from "@/components/ui/table";
 import Link from "next/link";
 import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 import { snakeCaseToTitle } from "@/lib/utils";
 import { Globe2Icon, LockIcon } from "lucide-react";
-import { Global } from "recharts";
+
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const VideosSection = () => {
@@ -118,7 +118,7 @@ const VideosSectionSuspense = () => {
             {videos.pages
               .flatMap((page) => page.items)
               .map((video) => (
-                <Link
+                <Link prefetch 
                   href={`/studio/videos/${video.id}`}
                   key={video.id}
                   legacyBehavior

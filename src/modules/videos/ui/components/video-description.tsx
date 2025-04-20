@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import { use, useState } from "react";
+import { useState } from "react";
 
 interface VideoDescriptionProps {
   compactViews: string;

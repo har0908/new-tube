@@ -64,7 +64,7 @@ export const CommentForm = ({
     create.mutate(values);
   };
 
-  const hadleCancel = () =>{
+  const handleCancel = () =>{
     form.reset();
     onCancel?.();
   }
@@ -108,7 +108,7 @@ export const CommentForm = ({
               <Button variant="ghost" 
               type="button"
               size="sm"
-               onClick={onCancel}>
+               onClick={handleCancel}>
                 Cancel
               </Button>
             )}

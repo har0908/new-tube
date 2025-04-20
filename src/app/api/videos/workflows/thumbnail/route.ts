@@ -64,7 +64,7 @@ export const { POST } = serve(
       
       const uploadedThumbnail = await context.run("upload-thumbnail",async()=>{
         const utapi = new UTApi();
-        const {data,error} = await utapi.uploadFilesFromUrl(tempThumbnailUrl)
+        const {data} = await utapi.uploadFilesFromUrl(tempThumbnailUrl)
 
         if(!data){
           throw new Error("Bad Request")

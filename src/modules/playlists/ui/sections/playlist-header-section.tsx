@@ -17,7 +17,7 @@ export const PlaylistHeaderSection = ({
   playlistId,
 }: PlaylistHeaderSectionProps) => {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<PlaylistHeaderSectionSkeleton/> }>
       <ErrorBoundary fallback={<p>Error</p>}>
         <PlaylistHeaderSectionSuspense playlistId={playlistId} />
       </ErrorBoundary>

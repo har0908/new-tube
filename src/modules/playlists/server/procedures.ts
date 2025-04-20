@@ -1,14 +1,12 @@
 import { db } from "@/db";
-import { playlists, playlistVideos, subscriptions, users, videoReactions, videos, videoUpdateSchema, videoViews } from "@/db/schema";
-import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
-import { mux } from "@/lib/mux"
+import { playlists, playlistVideos, users, videoReactions, videos, videoViews } from "@/db/schema";
+import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+// import { mux } from "@/lib/mux"
 
-import { and, desc, eq, getTableColumns, inArray, isNotNull, lt, or, sql } from "drizzle-orm";
+import { and, desc, eq, getTableColumns, lt, or, sql } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { UTApi } from "uploadthing/server";
-import { workflow } from "@/lib/workflow";
-import { identity } from "@trpc/server/unstable-core-do-not-import";
+
 
 export const playlistsRouter = createTRPCRouter({
 
@@ -155,8 +153,8 @@ export const playlistsRouter = createTRPCRouter({
     playlistId: z.string().uuid(),
     videoId: z.string().uuid(),
    }))
-  .mutation(async ({ input, ctx }) => {
-    const { id: userId } = ctx.user;
+  .mutation(async ({ input}) => {
+    
     const { playlistId, videoId } = input;
 
     const [existingPlaylist] = await db
@@ -220,8 +218,8 @@ export const playlistsRouter = createTRPCRouter({
     playlistId: z.string().uuid(),
     videoId: z.string().uuid(),
    }))
-  .mutation(async ({ input, ctx }) => {
-    const { id: userId } = ctx.user;
+  .mutation(async ({ input}) => {
+    
     const { playlistId, videoId } = input;
 
     const [existingPlaylist] = await db

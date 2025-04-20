@@ -3,8 +3,7 @@
 
 import { InfiniteScroll } from "@/components/infinite-scroll"
 import { DEFAULT_LIMIT } from "@/constants"
-import {  VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card"
-import {VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card"
+
 import { trpc } from "@/trpc/client"
 import Link from "next/link"
 import { Suspense } from "react"
@@ -64,7 +63,7 @@ const SubscriptionsSectionSuspense=()=>{
         <div>
         <div className="flex flex-col gap-y-4" >
            {subscription.pages.map((page)=>page.items.map((subscription)=>(
-            <Link href={`/user/${subscription.user.id}`} key={subscription.creatorId}>
+            <Link prefetch  href={`/user/${subscription.user.id}`} key={subscription.creatorId}>
                 <SubscriptionItem
                 name={subscription.user.name}
                 imageUrl={subscription.user.imageUrl}
