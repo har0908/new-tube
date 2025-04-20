@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { subscriptions, users, videos } from "@/db/schema";
-import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
 
 import { and, desc, eq, getTableColumns, inArray, isNotNull, lt, or } from "drizzle-orm";
@@ -9,7 +9,7 @@ import { z } from "zod";
 
 
 export const usersRouter = createTRPCRouter({
-
+  
   getOne: baseProcedure
     .input(z.object({ id: z.string().uuid() }))
     .query(async ({ input, ctx }) => {
